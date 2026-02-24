@@ -14,6 +14,8 @@ namespace Backend.Data
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<ReferalCode> ReferalCodes { get; set; }
+        public DbSet<Discount> Discounts { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Customers>(entity =>
@@ -21,6 +23,10 @@ namespace Backend.Data
                 entity.Property(e => e.Email).IsRequired().HasMaxLength(255);
                 entity.Property(p => p.Password).IsRequired();
                 entity.HasIndex(e => e.Email).IsUnique();
+                entity.HasOne(c =>c.ReferredByCode)
+                    .WithMany()
+                    .HasForeignKey(r => r.ReferredByCodeId)
+                    .OnDelete(DeleteBehavior.SetNull);
             });
 
             modelBuilder.Entity<Products>(entity =>
@@ -70,7 +76,34 @@ namespace Backend.Data
                 
                     
             });
-        
-         }
+            modelBuilder.Entity<ReferalCode>(entity =>
+            { 
+                entity.HasKey(s=>s.Id);
+                entity.Property(s => s.Code).IsRequired().HasMaxLength(50);
+                entity.Property(s => s.CreatedAt).IsRequired();
+                entity.HasIndex(s=>s.Code).IsUnique();
+                entity.HasOne(s=>s.Referrer)
+                    .WithMany()
+                    .HasForeignKey(r => r.ReferrerId)
+                    .OnDelete(DeleteBehavior.Restrict);
+                entity.HasOne(s =>s.UsedByUser)
+                    .WithMany()
+                    .HasForeignKey(r => r.UsedByUserId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
+            modelBuilder.Entity<Discount>(entity =>
+                {
+                    entity.HasKey(d => d.Id);
+                    entity.Property(d => d.DiscountPercentage).IsRequired().HasColumnType("decimal(5,2)");
+                    entity.Property(d => d.DiscountAmount).HasColumnType("decimal(18,2)");
+                    entity.Property(d => d.Source).IsRequired().HasMaxLength(50);
+                    entity.HasOne(d => d.User)
+                        .WithMany()
+                        .HasForeignKey(r => r.UserId)
+                        .OnDelete(DeleteBehavior.Cascade);
+                }
+            );
+
+        }
 }
 }

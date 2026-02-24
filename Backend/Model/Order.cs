@@ -4,7 +4,7 @@ namespace Backend.Model
     {
         public int Id { get; set; }
         public int CustomerId { get; set; }
-        public Customers? Customer { get; set; }
+
         public decimal Subtotal { get; set; }
         public decimal Shipping { get; set; }
         public decimal Tax { get; set; }
@@ -12,7 +12,9 @@ namespace Backend.Model
         public string Status { get; set; } = "pending"; // pending, paid, shipped, delivered, cancelled
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? UpdatedAt { get; set; }
-        
+        //Customer
+                
+        public Customers? Customer { get; set; }
         // Shipping info
         public int ShippingDetailId { get; set; }
         public ShippingDetail? ShippingDetail { get; set; }
@@ -22,5 +24,9 @@ namespace Backend.Model
         
         // Payment
         public Payment? Payment { get; set; }
+        //Discount Used
+        public int?DiscountId { get; set; }
+        public Discount? AppliedDiscount { get; set; }
+        public decimal? DiscountAmount { get; set; }
     }
 }
