@@ -1,0 +1,223 @@
+/* Lemon8-inspired Login Styling */
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f5f3e8 0%, #ebe9dc 100%);
+  font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  padding: 20px;
+}
+
+.login-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 24px;
+  padding: 40px;
+  box-shadow: 0 20px 40px rgba(255, 234, 167, 0.3),
+              0 15px 30px rgba(253, 121, 168, 0.2);
+  width: 100%;
+  max-width: 420px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.login-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #2d3436;
+  margin: 0 0 8px 0;
+  background: linear-gradient(135deg, #fdcb6e, #e17055);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.login-subtitle {
+  color: #636e72;
+  font-size: 16px;
+  margin: 0;
+  font-weight: 400;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #2d3436;
+  margin: 0;
+}
+
+.form-input {
+  padding: 16px 20px;
+  border: 2px solid #f1f2f6;
+  border-radius: 16px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  background: #ffffff;
+  color: #2d3436;
+  outline: none;
+}
+
+.form-input:focus {
+  border-color: #fdcb6e;
+  box-shadow: 0 0 0 4px rgba(253, 203, 110, 0.15);
+  transform: translateY(-2px);
+}
+
+.form-input::placeholder {
+  color: #b2bec3;
+}
+
+.form-check {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 8px 0;
+}
+
+.form-checkbox {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  appearance: none;
+  background: #ffffff;
+  transition: all 0.3s ease;
+}
+
+.form-checkbox:checked {
+  background: linear-gradient(135deg, #fdcb6e, #e17055);
+  border-color: #fdcb6e;
+}
+
+.form-checkbox:checked::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.checkbox-label {
+  font-size: 14px;
+  color: #636e72;
+  cursor: pointer;
+  margin: 0;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #fdcb6e 0%, #e17055 100%);
+  border: none;
+  padding: 16px 24px;
+  border-radius: 16px;
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 8px;
+  box-shadow: 0 8px 20px rgba(253, 203, 110, 0.3);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(253, 203, 110, 0.4);
+  background: linear-gradient(135deg, #f39c12 0%, #d63031 100%);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.signup-prompt {
+  text-align: center;
+  margin-top: 24px;
+  font-size: 14px;
+  color: #636e72;
+}
+
+.btn-link {
+  background: none;
+  border: none;
+  color: #e17055;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.3s ease;
+}
+
+.btn-link:hover {
+  color: #d63031;
+  text-decoration: underline;
+}
+
+/* Responsive design */
+@media (max-width: 480px) {
+  .login-container {
+    padding: 16px;
+  }
+  
+  .login-card {
+    padding: 24px;
+    border-radius: 20px;
+  }
+  
+  .login-title {
+    font-size: 24px;
+  }
+  
+  .form-input {
+    padding: 14px 16px;
+  }
+  
+  .btn-primary {
+    padding: 14px 20px;
+  }
+}
+
+/* Add subtle animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.login-card {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* Focus states for accessibility */
+.form-input:focus,
+.form-checkbox:focus,
+.btn-primary:focus,
+.btn-link:focus {
+  outline: 2px solid #fdcb6e;
+  outline-offset: 2px;
+}
