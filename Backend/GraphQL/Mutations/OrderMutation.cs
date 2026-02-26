@@ -12,7 +12,7 @@ namespace Backend.GraphQL.Mutations
             List<OrderItemInputType> items,
             decimal subtotal,
             decimal shipping,
-            decimal tax,
+            string? discountCode,
             [Service] IOrderService orderService)
         {
             var orderItems = items.Select(i => new OrderItemInput
@@ -22,7 +22,7 @@ namespace Backend.GraphQL.Mutations
                 Price = i.Price
             }).ToList();
 
-            return await orderService.CreateOrderAsync(customerId, shippingDetailId, orderItems, subtotal, shipping, tax);
+            return await orderService.CreateOrderAsync(customerId, shippingDetailId, orderItems, subtotal, shipping, discountCode);
         }
 
         public async Task<Order> UpdateOrderStatus(
@@ -31,6 +31,12 @@ namespace Backend.GraphQL.Mutations
             [Service] IOrderService orderService)
         {
             return await orderService.UpdateOrderStatusAsync(orderId, status);
+        }
+        public async Task<String> DeletePendingOrder(
+            int orderId,
+            [Service] IOrderService orderService)
+        {
+            return await orderService.DeletePendingOrderAsync(orderId);
         }
     }
 

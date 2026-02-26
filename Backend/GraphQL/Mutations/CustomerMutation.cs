@@ -8,12 +8,12 @@ namespace Backend.GraphQL.Mutations
     {
         
         public async Task<Customers> CreateCustomerAsync(
-           string email, string password,
+           string email, string password, string? referralCode,
             [Service] ApplicationDbContext dbContext,
             [Service] IAuthService authService)
         {
             
-             return await authService.RegisterUserAsync(email, password);
+             return await authService.RegisterUserAsync(email, password, referralCode);
              
         }
     }

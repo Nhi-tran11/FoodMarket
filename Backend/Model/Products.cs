@@ -37,7 +37,7 @@ public class Products
                 return false;
             }
 
-            var now = DateTime.Now;
+            var now = DateTime.UtcNow;
             return now >= PromotionStartDate.Value && now <= PromotionEndDate.Value;
         }
     }

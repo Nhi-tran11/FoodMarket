@@ -10,6 +10,13 @@ using DotNetEnv;
 Env.Load();
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Override configuration with .env values
+builder.Configuration["Stripe:SecretKey"] = Environment.GetEnvironmentVariable("STRIPE_SECRET_KEY");
+builder.Configuration["Stripe:PublishableKey"] = Environment.GetEnvironmentVariable("STRIPE_PUBLISHABLE_KEY");
+builder.Configuration["Email:SmtpUsername"] = Environment.GetEnvironmentVariable("SMTP_USERNAME");
+builder.Configuration["Email:SmtpPassword"] = Environment.GetEnvironmentVariable("SMTP_PASSWORD");
+
 //Add DbContext'
 builder.Services.AddDbContext<ApplicationDbContext>(
     option => option.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -33,6 +40,13 @@ builder.Services.AddScoped<IPaymentService, PaymentService>();
 //Add Order Service
 builder.Services.AddScoped<IOrderService, OrderService>();
 
+//Add Referral Service
+builder.Services.AddScoped<IReferralService, ReferralService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
+
+//Add background cleanup for expired pending orders
+builder.Services.AddHostedService<PendingOrderCleanupService>();
+
 //Add GraphQL
 builder.Services.AddGraphQLServer()
     .AddQueryType()
@@ -45,7 +59,10 @@ builder.Services.AddGraphQLServer()
     .AddTypeExtension<ShippingDetailMutation>()
     .AddTypeExtension<PaymentMutation>()
     .AddTypeExtension<PaymentQuery>()
-    .AddTypeExtension<OrderMutation>();
+    .AddTypeExtension<OrderMutation>()
+    .AddTypeExtension<ReferralCodeMutation>()
+    .AddTypeExtension<ReferralCodeQuery>()
+    .AddTypeExtension<OrderQuery>();
 
 var app =builder.Build();
 

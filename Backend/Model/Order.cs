@@ -25,8 +25,11 @@ namespace Backend.Model
         // Payment
         public Payment? Payment { get; set; }
         //Discount Used
-        public int?DiscountId { get; set; }
+        public int? DiscountId { get; set; }
         public Discount? AppliedDiscount { get; set; }
         public decimal? DiscountAmount { get; set; }
+        // Referral code used for this order
+        public int? UsedReferalCodeId { get; set; }
+        public ReferalCode? UsedReferalCode { get; set; }
     }
 }

@@ -224,3 +224,11 @@
 /Users/xuannhitran/Documents/FoodMarketApp/Backend/bin/Debug/net10.0/System.Private.Windows.Core.dll
 /Users/xuannhitran/Documents/FoodMarketApp/Backend/bin/Debug/net10.0/System.Private.Windows.GdiPlus.dll
 /Users/xuannhitran/Documents/FoodMarketApp/Backend/bin/Debug/net10.0/runtimes/win/lib/net10.0/Microsoft.Win32.SystemEvents.dll
+/Users/xuannhitran/Documents/FoodMarketApp/Backend/obj/Debug/net10.0/Backend.sourcelink.json
+/Users/xuannhitran/Documents/FoodMarketApp/Backend/bin/Debug/net10.0/AWSSDK.Core.dll
+/Users/xuannhitran/Documents/FoodMarketApp/Backend/bin/Debug/net10.0/AWSSDK.SimpleEmail.dll
+/Users/xuannhitran/Documents/FoodMarketApp/Backend/bin/Debug/net10.0/BouncyCastle.Cryptography.dll
+/Users/xuannhitran/Documents/FoodMarketApp/Backend/bin/Debug/net10.0/MailKit.dll
+/Users/xuannhitran/Documents/FoodMarketApp/Backend/bin/Debug/net10.0/MimeKit.dll
+/Users/xuannhitran/Documents/FoodMarketApp/Backend/bin/Debug/net10.0/System.Formats.Asn1.dll
+/Users/xuannhitran/Documents/FoodMarketApp/Backend/bin/Debug/net10.0/runtimes/win/lib/net9.0/System.Diagnostics.EventLog.Messages.dll

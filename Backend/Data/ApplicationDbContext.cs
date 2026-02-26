@@ -23,10 +23,10 @@ namespace Backend.Data
                 entity.Property(e => e.Email).IsRequired().HasMaxLength(255);
                 entity.Property(p => p.Password).IsRequired();
                 entity.HasIndex(e => e.Email).IsUnique();
-                entity.HasOne(c =>c.ReferredByCode)
-                    .WithMany()
-                    .HasForeignKey(r => r.ReferredByCodeId)
-                    .OnDelete(DeleteBehavior.SetNull);
+                entity.HasMany(c => c.ReferalCodes)
+                    .WithOne(r => r.ReceivedByUser)
+                    .HasForeignKey(r => r.ReceivedByUserId)
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity<Products>(entity =>
@@ -82,15 +82,22 @@ namespace Backend.Data
                 entity.Property(s => s.Code).IsRequired().HasMaxLength(50);
                 entity.Property(s => s.CreatedAt).IsRequired();
                 entity.HasIndex(s=>s.Code).IsUnique();
-                entity.HasOne(s=>s.Referrer)
+                entity.Property(s => s.IsUsed).IsRequired();
+                //Referral code -> Inviter who created it (will get reward)
+                entity.HasOne(s =>s.Referrer)
                     .WithMany()
-                    .HasForeignKey(r => r.ReferrerId)
-                    .OnDelete(DeleteBehavior.Restrict);
-                entity.HasOne(s =>s.UsedByUser)
-                    .WithMany()
-                    .HasForeignKey(r => r.UsedByUserId)
+                    .HasForeignKey(r => r.RefererId)
                     .OnDelete(DeleteBehavior.Restrict);
             });
+            
+            modelBuilder.Entity<Order>(entity =>
+            {
+                entity.HasOne(o => o.UsedReferalCode)
+                    .WithMany()
+                    .HasForeignKey(o => o.UsedReferalCodeId)
+                    .OnDelete(DeleteBehavior.SetNull);
+            });
+
             modelBuilder.Entity<Discount>(entity =>
                 {
                     entity.HasKey(d => d.Id);
