@@ -10,7 +10,7 @@ namespace Backend.Service;
 public interface IAuthService
 {
     Task<Customers> AuthenticateAsync(string email, string password);
-    Task<Customers> RegisterUserAsync(string email, string password);
+    Task<Customers> RegisterUserAsync(string email, string password, string? referralCode);
     Task<Customers?> GetCustomersAsync(string email);
 }
 public class AuthService : IAuthService
@@ -20,13 +20,14 @@ public class AuthService : IAuthService
     {
         _dbContext = dbContext;
     }
-    public async Task<Customers> RegisterUserAsync(string email, string password)
+    public async Task<Customers> RegisterUserAsync(string email, string password, string? referralCode )
     {
         var existingCustomer = await _dbContext.Customers.FirstOrDefaultAsync(c => c.Email == email);
         if (existingCustomer != null)
         {
             throw new GraphQLException("Customer with this email already exists.");
         }
+       
         using (var sha256 = SHA256.Create())
         {
             var hashedPassword = Convert.ToBase64String(sha256.ComputeHash(Encoding.UTF8.GetBytes(password)));
@@ -35,10 +36,19 @@ public class AuthService : IAuthService
                 Email = email,
                 Password = hashedPassword,
                 Role = "User"
-
             };
             _dbContext.Add(newCustomer);
             await _dbContext.SaveChangesAsync();
+            //If they have a referral code,link it to their account
+            if(referralCode !=null)
+            {
+                var code = await _dbContext.ReferalCodes.FirstOrDefaultAsync(c => c.Code == referralCode && c.ReceivedByUserId ==null);
+                if(code != null)
+                {
+                    code.ReceivedByUserId = newCustomer.Id;
+                    await _dbContext.SaveChangesAsync();
+                }
+            }
             return newCustomer;
         }
 

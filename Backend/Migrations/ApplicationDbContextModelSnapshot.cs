@@ -39,9 +39,6 @@ namespace Backend.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int?>("ReferredByCodeId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Role")
                         .IsRequired()
                         .HasColumnType("text");
@@ -53,8 +50,6 @@ namespace Backend.Migrations
 
                     b.HasIndex("Email")
                         .IsUnique();
-
-                    b.HasIndex("ReferredByCodeId");
 
                     b.ToTable("Customers");
                 });
@@ -145,6 +140,9 @@ namespace Backend.Migrations
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<int?>("UsedReferalCodeId")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CustomerId");
@@ -152,6 +150,8 @@ namespace Backend.Migrations
                     b.HasIndex("DiscountId");
 
                     b.HasIndex("ShippingDetailId");
+
+                    b.HasIndex("UsedReferalCodeId");
 
                     b.ToTable("Orders");
                 });
@@ -305,16 +305,25 @@ namespace Backend.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<decimal?>("DiscountAmount")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal?>("DiscountPercentage")
+                        .HasColumnType("numeric");
+
+                    b.Property<DateTime?>("ExpiryDate")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<bool>("IsUsed")
                         .HasColumnType("boolean");
 
-                    b.Property<int?>("NewUserDiscountId")
+                    b.Property<int?>("ReceivedByUserId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("RefererId")
                         .HasColumnType("integer");
 
                     b.Property<int?>("ReferrerDiscountId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("ReferrerId")
                         .HasColumnType("integer");
 
                     b.Property<bool>("RewardClaimed")
@@ -323,17 +332,14 @@ namespace Backend.Migrations
                     b.Property<DateTime>("UsedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int?>("UsedByUserId")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
 
                     b.HasIndex("Code")
                         .IsUnique();
 
-                    b.HasIndex("ReferrerId");
+                    b.HasIndex("ReceivedByUserId");
 
-                    b.HasIndex("UsedByUserId");
+                    b.HasIndex("RefererId");
 
                     b.ToTable("ReferalCodes");
                 });
@@ -397,16 +403,6 @@ namespace Backend.Migrations
                     b.ToTable("ShippingDetails");
                 });
 
-            modelBuilder.Entity("Backend.Model.Customers", b =>
-                {
-                    b.HasOne("Backend.Model.ReferalCode", "ReferredByCode")
-                        .WithMany()
-                        .HasForeignKey("ReferredByCodeId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.Navigation("ReferredByCode");
-                });
-
             modelBuilder.Entity("Backend.Model.Discount", b =>
                 {
                     b.HasOne("Backend.Model.Customers", "User")
@@ -436,11 +432,18 @@ namespace Backend.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Backend.Model.ReferalCode", "UsedReferalCode")
+                        .WithMany()
+                        .HasForeignKey("UsedReferalCodeId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
                     b.Navigation("AppliedDiscount");
 
                     b.Navigation("Customer");
 
                     b.Navigation("ShippingDetail");
+
+                    b.Navigation("UsedReferalCode");
                 });
 
             modelBuilder.Entity("Backend.Model.OrderItem", b =>
@@ -473,20 +476,20 @@ namespace Backend.Migrations
 
             modelBuilder.Entity("Backend.Model.ReferalCode", b =>
                 {
+                    b.HasOne("Backend.Model.Customers", "ReceivedByUser")
+                        .WithMany("ReferalCodes")
+                        .HasForeignKey("ReceivedByUserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("Backend.Model.Customers", "Referrer")
                         .WithMany()
-                        .HasForeignKey("ReferrerId")
+                        .HasForeignKey("RefererId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Backend.Model.Customers", "UsedByUser")
-                        .WithMany()
-                        .HasForeignKey("UsedByUserId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                    b.Navigation("ReceivedByUser");
 
                     b.Navigation("Referrer");
-
-                    b.Navigation("UsedByUser");
                 });
 
             modelBuilder.Entity("Backend.Model.ShippingDetail", b =>
@@ -502,6 +505,8 @@ namespace Backend.Migrations
 
             modelBuilder.Entity("Backend.Model.Customers", b =>
                 {
+                    b.Navigation("ReferalCodes");
+
                     b.Navigation("ShippingDetails");
                 });
 
