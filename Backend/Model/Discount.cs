@@ -12,7 +12,7 @@ namespace Backend.Model
         public DateTime CreatedAt { get; set; }
         public bool IsUsed { get; set; } = false;
         public int? UsedInOrder { get; set; }//link to order where used
-        public string Source { get; set; } = "referral"; // NEW: "referral", "promotion", etc.
+        public string Source { get; set; } = "referral"; //  "referral", "promotion", etc.
         
     }
 }

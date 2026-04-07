@@ -517,8 +517,7 @@
       },
       "MailKit/4.15.0": {
         "dependencies": {
-          "MimeKit": "4.15.0",
-          "System.Formats.Asn1": "10.0.2"
+          "MimeKit": "4.15.0"
         },
         "runtime": {
           "lib/net10.0/MailKit.dll": {
@@ -557,7 +556,6 @@
           "Microsoft.NET.StringTools": "17.14.28",
           "System.CodeDom": "9.0.0",
           "System.Configuration.ConfigurationManager": "9.0.0",
-          "System.Diagnostics.EventLog": "9.0.0",
           "System.Formats.Nrbf": "9.0.0",
           "System.Resources.Extensions": "9.0.0",
           "System.Security.Cryptography.ProtectedData": "9.0.0"
@@ -574,7 +572,6 @@
           "Microsoft.Build.Framework": "17.14.28",
           "Microsoft.NET.StringTools": "17.14.28",
           "System.Configuration.ConfigurationManager": "9.0.0",
-          "System.Diagnostics.EventLog": "9.0.0",
           "System.Security.Cryptography.ProtectedData": "9.0.0"
         },
         "runtime": {
@@ -807,7 +804,6 @@
           "System.CodeDom": "9.0.0",
           "System.Composition": "9.0.0",
           "System.Configuration.ConfigurationManager": "9.0.0",
-          "System.Diagnostics.EventLog": "9.0.0",
           "System.Resources.Extensions": "9.0.0",
           "System.Security.Cryptography.ProtectedData": "9.0.0",
           "System.Security.Permissions": "9.0.0",
@@ -1100,21 +1096,10 @@
       },
       "System.Configuration.ConfigurationManager/9.0.0": {
         "dependencies": {
-          "System.Diagnostics.EventLog": "9.0.0",
           "System.Security.Cryptography.ProtectedData": "9.0.0"
         },
         "runtime": {
           "lib/net9.0/System.Configuration.ConfigurationManager.dll": {
-            "assemblyVersion": "9.0.0.0",
-            "fileVersion": "9.0.24.52809"
-          }
-        }
-      },
-      "System.Diagnostics.EventLog/9.0.0": {
-        "runtimeTargets": {
-          "runtimes/win/lib/net9.0/System.Diagnostics.EventLog.Messages.dll": {
-            "rid": "win",
-            "assetType": "runtime",
             "assemblyVersion": "9.0.0.0",
             "fileVersion": "9.0.24.52809"
           }
@@ -1136,14 +1121,6 @@
           "lib/net10.0/System.Private.Windows.GdiPlus.dll": {
             "assemblyVersion": "10.0.0.0",
             "fileVersion": "10.0.326.7603"
-          }
-        }
-      },
-      "System.Formats.Asn1/10.0.2": {
-        "runtime": {
-          "lib/net10.0/System.Formats.Asn1.dll": {
-            "assemblyVersion": "10.0.0.0",
-            "fileVersion": "10.0.225.61305"
           }
         }
       },
@@ -1768,26 +1745,12 @@
       "path": "system.configuration.configurationmanager/9.0.0",
       "hashPath": "system.configuration.configurationmanager.9.0.0.nupkg.sha512"
     },
-    "System.Diagnostics.EventLog/9.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-qd01+AqPhbAG14KtdtIqFk+cxHQFZ/oqRSCoxU1F+Q6Kv0cl726sl7RzU9yLFGd4BUOKdN4XojXF0pQf/R6YeA==",
-      "path": "system.diagnostics.eventlog/9.0.0",
-      "hashPath": "system.diagnostics.eventlog.9.0.0.nupkg.sha512"
-    },
     "System.Drawing.Common/10.0.3": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-bJlT89G7EqMpiLCvIPmb7BHpcSxjVeFsahRyQk3/mrUt5YgHKiFcEv88db97gKcpRn5opxfBwI0ohUmJlxuGJg==",
       "path": "system.drawing.common/10.0.3",
       "hashPath": "system.drawing.common.10.0.3.nupkg.sha512"
-    },
-    "System.Formats.Asn1/10.0.2": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-9Hee6iQ74pDgdRNIL6lO8Vlx2onVWd5aDnqwk4Pvo0h5FklBd7QwcQDKgxeLuhiy0o3ibzUVO0KFQe0/hPXU+Q==",
-      "path": "system.formats.asn1/10.0.2",
-      "hashPath": "system.formats.asn1.10.0.2.nupkg.sha512"
     },
     "System.Formats.Nrbf/9.0.0": {
       "type": "package",
