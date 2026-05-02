@@ -14,7 +14,7 @@ A full-stack food marketplace web application built with React and .NET 10, feat
 - Shipping details management
 - Admin seeding on startup
 - Automatic cleanup of expired pending orders (background service)
-- Email notifications (SMTP / AWS SES)
+- Email notifications (SMTP)
 - File upload support
 
 ---
@@ -29,7 +29,7 @@ A full-stack food marketplace web application built with React and .NET 10, feat
 | Entity Framework Core 10 | ORM & migrations |
 | PostgreSQL (Npgsql) | Database |
 | Stripe.net | Payment processing |
-| MailKit / AWS SES | Email notifications |
+| MailKit | Email notifications |
 | QRCoder | QR code generation |
 | Docker | Database containerization |
 

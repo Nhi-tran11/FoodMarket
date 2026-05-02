@@ -7,7 +7,7 @@ namespace Backend.GraphQL.Mutations
     public class CustomerMutation
     {
         
-        public async Task<Customers> CreateCustomerAsync(
+        public async Task<Customer> CreateCustomerAsync(
            string email, string password, string? referralCode,
             [Service] ApplicationDbContext dbContext,
             [Service] IAuthService authService)

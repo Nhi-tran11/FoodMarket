@@ -6,16 +6,16 @@ using Microsoft.EntityFrameworkCore;
 namespace Backend.Service;
 public interface IProductService
 {
-    Task<List<Products>> GetProductsByCategoryAsync(string category);
-    Task<Products> CreateProductAsync(
+    Task<List<Product>> GetProductsByCategoryAsync(string category);
+    Task<Product> CreateProductAsync(
            string name, string description, double price, string category, string image, bool inStock, int stockQuantity, string unit);
-    Task<List<Products>> AllProductsAsync();
-    Task<Products?> GetProductByIdAsync(int id);
-    Task<Products> DeleteProductAsync(int productId);
-    Task<Products> UpdateProductStockAsync(int productId, int newStockQuantity);
+    Task<List<Product>> AllProductsAsync();
+    Task<Product?> GetProductByIdAsync(int id);
+    Task<Product> DeleteProductAsync(int productId);
+    Task<Product> UpdateProductStockAsync(int productId, int newStockQuantity);
     Task<bool>ReserveProductStockAsync(int productId, int quantity); 
-    Task<Products> AddPromotionToProductAsync(int productId, double promotionPrice, DateTime promotionStartDate, DateTime promotionEndDate);   
-    Task<List<Products>> GetPromotionProductsAsync();
+    Task<Product> AddPromotionToProductAsync(int productId, double promotionPrice, DateTime promotionStartDate, DateTime promotionEndDate);   
+    Task<List<Product>> GetPromotionProductsAsync();
 }
 public sealed class ProductService : IProductService
 {
@@ -25,24 +25,24 @@ public sealed class ProductService : IProductService
         _dbContext = dbContext;
     }
 
-    public Task<List<Products>> AllProductsAsync()
+    public Task<List<Product>> AllProductsAsync()
     {
         return _dbContext.Products.ToListAsync();
     }
 
-    public async Task<Products?> GetProductByIdAsync(int id)
+    public async Task<Product?> GetProductByIdAsync(int id)
     {
         return await _dbContext.Products.FirstOrDefaultAsync(p => p.Id == id);
     }
 
-    public Task<Products> CreateProductAsync(string name, string description, double price, string category, string image, bool inStock, int stockQuantity, string unit)
+    public Task<Product> CreateProductAsync(string name, string description, double price, string category, string image, bool inStock, int stockQuantity, string unit)
     {
         var existingProduct = _dbContext.Products.FirstOrDefault(p => p.Name ==name);
         if(existingProduct !=null)
         {
             throw new Exception("Product with the same name already exists.");
         }
-        var newProduct = new Products
+        var newProduct = new Product
         {
             Name = name,
             Description = description,
@@ -58,7 +58,7 @@ public sealed class ProductService : IProductService
         return Task.FromResult(newProduct);
     }
 
-    public Task<Products> DeleteProductAsync(int productId)
+    public Task<Product> DeleteProductAsync(int productId)
     {
         var product = _dbContext.Products.FirstOrDefault(p => p.Id == productId);
         if(product == null)
@@ -70,7 +70,7 @@ public sealed class ProductService : IProductService
         return Task.FromResult(product);
     }
 
-    public Task<List<Products>> GetProductsByCategoryAsync(string category)
+    public Task<List<Product>> GetProductsByCategoryAsync(string category)
     {
         return _dbContext.Products
                 .Where(p => p.Category.ToLower() == category.ToLower())
@@ -119,7 +119,7 @@ public sealed class ProductService : IProductService
     return false;
     }
 
-    public Task<Products> UpdateProductStockAsync(int productId, int newStockQuantity)
+    public Task<Product> UpdateProductStockAsync(int productId, int newStockQuantity)
     {
         var product = _dbContext.Products.FirstOrDefault(p =>p.Id == productId);
         if(product == null)
@@ -136,7 +136,7 @@ public sealed class ProductService : IProductService
         }
     }
 
-    public Task<Products> AddPromotionToProductAsync(int productId, double promotionPrice, DateTime promotionStartDate, DateTime promotionEndDate)
+    public Task<Product> AddPromotionToProductAsync(int productId, double promotionPrice, DateTime promotionStartDate, DateTime promotionEndDate)
     {
        var product = _dbContext.Products.FirstOrDefault(p=>p.Id == productId);
        if(product == null)
@@ -160,7 +160,7 @@ public sealed class ProductService : IProductService
 
     }
 
-    public async Task<List<Products>> GetPromotionProductsAsync()
+    public async Task<List<Product>> GetPromotionProductsAsync()
     {
         var now = DateTime.UtcNow;
     

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import './SignIn.css';
 import { useState } from 'react';
 import { gql,useMutation } from '@apollo/client';
+import { useEffect } from 'react';
 
 function SignUp() {
    
@@ -11,22 +12,31 @@ function SignUp() {
     const [inputs, setInputs] = useState({
         email: "",
         password: "",
+        referralCode: ""
     });
     const [message, setMessage] = useState(null);
   const CREATE_NEW_USER = gql`
-  mutation CreateCustomer($email: String!, $password: String!) {
-    createCustomer(email: $email, password: $password) {
+  mutation CreateCustomer($email: String!, $password: String!, $referralCode: String) {
+    createCustomer(email: $email, password: $password, referralCode: $referralCode) {
       id
       email
     }
   }
 `;
+useEffect(()=>{
+    const urlParams = new URLSearchParams(window.location.search);
+    const referralCode = urlParams.get('referralCode');
+    if(referralCode){
+        setInputs(prev => ({...prev, referralCode}));
+    }
+}, [])
+
 
 // Use the mutation hook
 const [createCustomer] = useMutation(CREATE_NEW_USER);
     const handleSubmit = (e) => {
         e.preventDefault();
-        createCustomer({variables: {email: inputs.email, password: inputs.password}})
+        createCustomer({variables: {email: inputs.email, password: inputs.password, referralCode: inputs.referralCode}})
         .then(response => {
             setMessage("Account created successfully! Please sign in.");
             console.log('User created:', response.data.createCustomer);

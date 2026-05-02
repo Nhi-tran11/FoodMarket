@@ -11,10 +11,10 @@ namespace Backend.Model
         public DateTime UsedAt { get; set; }
         //Who created the code
         public int RefererId { get; set; }
-        public Customers Referrer { get; set; }=null!;
+        public Customer Referrer { get; set; }=null!;
         //Who received the code
         public int? ReceivedByUserId  { get; set; }
-        public Customers? ReceivedByUser { get; set; }
+        public Customer? ReceivedByUser { get; set; }
                 // Discount details
         public decimal? DiscountAmount { get; set; }
         public decimal? DiscountPercentage { get; set; }

@@ -9,9 +9,9 @@ namespace Backend.Service;
 
 public interface IAuthService
 {
-    Task<Customers> AuthenticateAsync(string email, string password);
-    Task<Customers> RegisterUserAsync(string email, string password, string? referralCode);
-    Task<Customers?> GetCustomersAsync(string email);
+    Task<Customer> AuthenticateAsync(string email, string password);
+    Task<Customer> RegisterUserAsync(string email, string password, string? referralCode);
+    Task<Customer?> GetCustomerAsync(string email);
 }
 public class AuthService : IAuthService
 {
@@ -20,7 +20,7 @@ public class AuthService : IAuthService
     {
         _dbContext = dbContext;
     }
-    public async Task<Customers> RegisterUserAsync(string email, string password, string? referralCode )
+    public async Task<Customer> RegisterUserAsync(string email, string password, string? referralCode )
     {
         var existingCustomer = await _dbContext.Customers.FirstOrDefaultAsync(c => c.Email == email);
         if (existingCustomer != null)
@@ -31,7 +31,7 @@ public class AuthService : IAuthService
         using (var sha256 = SHA256.Create())
         {
             var hashedPassword = Convert.ToBase64String(sha256.ComputeHash(Encoding.UTF8.GetBytes(password)));
-            var newCustomer = new Customers
+            var newCustomer = new Customer
             {
                 Email = email,
                 Password = hashedPassword,
@@ -53,7 +53,7 @@ public class AuthService : IAuthService
         }
 
     }
-    public async Task<Customers> AuthenticateAsync(string email, string password)
+    public async Task<Customer> AuthenticateAsync(string email, string password)
     {
         // Implement authentication logic here or throw NotImplementedException for now
         var existingCustomer = await _dbContext.Customers.FirstOrDefaultAsync(c => c.Email == email);
@@ -74,7 +74,7 @@ public class AuthService : IAuthService
         }
         throw new GraphQLException("Customer not found.");
     }
-    public async Task<Customers?>GetCustomersAsync(string email)
+    public async Task<Customer?> GetCustomerAsync(string email)
     {
         return await _dbContext.Customers.FirstOrDefaultAsync(c => c.Email == email);
     }

@@ -14,7 +14,7 @@ namespace Backend.Model
         public DateTime? UpdatedAt { get; set; }
         //Customer
                 
-        public Customers? Customer { get; set; }
+        public Customer? Customer { get; set; }
         // Shipping info
         public int ShippingDetailId { get; set; }
         public ShippingDetail? ShippingDetail { get; set; }

@@ -8,8 +8,8 @@ namespace Backend.Data
             
         }
 
-        public DbSet<Customers> Customers { get; set;}
-        public DbSet<Products> Products { get; set;}
+        public DbSet<Customer> Customers { get; set;}
+        public DbSet<Product> Products { get; set;}
         public DbSet<ShippingDetail> ShippingDetails {get; set;}
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Order> Orders { get; set; }
@@ -18,7 +18,7 @@ namespace Backend.Data
         public DbSet<Discount> Discounts { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Customers>(entity =>
+            modelBuilder.Entity<Customer>(entity =>
             {   entity.HasKey(c => c.Id);
                 entity.Property(e => e.Email).IsRequired().HasMaxLength(255);
                 entity.Property(p => p.Password).IsRequired();
@@ -29,7 +29,7 @@ namespace Backend.Data
                     .OnDelete(DeleteBehavior.Cascade);
             });
 
-            modelBuilder.Entity<Products>(entity =>
+            modelBuilder.Entity<Product>(entity =>
             {
                 entity.HasKey(p => p.Id);
                 entity.Property(p => p.Name).IsRequired().HasMaxLength(255);
@@ -44,7 +44,7 @@ namespace Backend.Data
                 entity.Property(p => p.PromotionEndDate);
             
             });
-            modelBuilder.Entity<Products>()
+            modelBuilder.Entity<Product>()
                 .Property(p=>p.RowVersion)
                 .IsRowVersion();
             modelBuilder.Entity<ShippingDetail>(entity =>

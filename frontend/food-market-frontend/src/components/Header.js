@@ -8,7 +8,7 @@ const Header = () => {
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
+  const user =JSON.parse(localStorage.getItem('user'));
   return (
     <header className="header">
       <div className="header-container">
@@ -83,14 +83,23 @@ const Header = () => {
               <span className="cart-badge">{getCartCount()}</span>
             )}
           </button>
-          <nav className={`nav desktop-nav ${isMenuOpen ? 'nav-open' : ''}`}>
-                    <Link to="/SignIn" className="nav-link about-link" onClick={() => setIsMenuOpen(false)}>
-            Sign In
-          </Link>
-          <Link to="/SignUp" className="nav-link about-link" onClick={() => setIsMenuOpen(false)}>
-            Sign Up
-          </Link>
-        </nav>
+          {user ? (
+            <>
+              <span className="user-greeting">Hello, {user.email.split('@')[0]}</span>
+              <Link to="/SignIn" className="nav-link about-link" onClick={() => { localStorage.removeItem('user'); setIsMenuOpen(false); }}>
+                Sign Out
+              </Link>
+            </>
+          ) : (
+            <nav className={`nav desktop-nav ${isMenuOpen ? 'nav-open' : ''}`}>
+              <Link to="/SignIn" className="nav-link about-link" onClick={() => setIsMenuOpen(false)}>
+                Sign In
+              </Link>
+              <Link to="/SignUp" className="nav-link about-link" onClick={() => setIsMenuOpen(false)}>
+                Sign Up
+              </Link>
+            </nav>
+          )}
         </div>
       </div>
     </header>

@@ -9,7 +9,7 @@ namespace Backend.GraphQL.Mutations
     public class ProductMutation
     {
         
-        public async Task<Products> CreateProductAsync(
+        public async Task<Product> CreateProductAsync(
            string name, string description, double price, string category, string image, bool inStock, int stockQuantity, string unit,
             [Service] ApplicationDbContext dbContext,
             [Service] IProductService productService)
@@ -17,13 +17,13 @@ namespace Backend.GraphQL.Mutations
             
                return await productService.CreateProductAsync(name, description, price, category, image, inStock, stockQuantity, unit);
         }
-        public async Task<Products> DeleteProductAsync(
+        public async Task<Product> DeleteProductAsync(
            int productId,
             [Service] IProductService productService)
         {
                return await productService.DeleteProductAsync(productId);
         }
-        public async Task<Products> UpdateProductStockAsync(
+        public async Task<Product> UpdateProductStockAsync(
             int productId,
             int newStockQuantity,
             [Service] IProductService productService)
@@ -37,7 +37,7 @@ namespace Backend.GraphQL.Mutations
         {
             return await productService.ReserveProductStockAsync(productId, quantity);
         }
-        public async Task<Products>AddPromotionToProductAsync(
+        public async Task<Product>AddPromotionToProductAsync(
             int productId,
             double promotionPrice,
             DateTime promotionStartDate,

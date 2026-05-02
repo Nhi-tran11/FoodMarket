@@ -3,7 +3,7 @@ public class ShippingDetail
 {
     public int Id {get; set;}
     public int CustomerId {get; set;}
-    public Customers? Customer {get; set;}
+    public Customer? Customer {get; set;}
     public string FullName {get; set;} =string.Empty;
     public string PhoneNumber {get; set;}=string.Empty;
     public string Address {get; set;}=string.Empty;

@@ -1,24 +1,48 @@
-     import React, { useState, useRef } from 'react';
-
+import React, { useState, useRef } from 'react';
+import { gql } from '@apollo/client';
 import './InviteFriend.css';
+import { useMutation } from '@apollo/client';
 const InviteFriend = () => {
   const [friendName, setFriendName] = useState('');
   const [friendEmail, setFriendEmail] = useState('');
   const [inviteSuccessMessage, setInviteSuccessMessage] = useState('');
   const inviteSectionRef = useRef(null);
-
+  const SEND_INVITATION =gql`
+  mutation sendInvitationEmail($inviterId: Int!, $inviteeEmail: String!) {
+    sendInvitationEmail(inviterId: $inviterId, inviteeEmail: $inviteeEmail) {
+      success
+      message
+    }
+  }
+`;
+  const user = JSON.parse(localStorage.getItem('user'));
+  const inviterId = user ? user.id : null;
+const [sendInvite] = useMutation(SEND_INVITATION);
   const handleInviteSubmit = (event) => {
     event.preventDefault();
-    // Simulate sending invite (replace with actual API call)
+
+    sendInvite({ variables: {inviterId, inviteeEmail: friendEmail}})
+    .then(response => {
+      const {success, message} = response.data.sendInvitationEmail;
+      if (success) {
+        setInviteSuccessMessage(message);
+      }
+    })
+    .catch(error => {
+      console.error('Error sending invitation:', error);
+    });
     setTimeout(() => {
-      setInviteSuccessMessage(`Invite sent to ${friendName} (${friendEmail})! They will receive a discount on their first order.`);
+      setInviteSuccessMessage(inviteSuccessMessage);
       // Clear form fields
       setFriendName('');
       setFriendEmail('');
+      
     }, 1000);
   };
 
   return (
+    inviterId ? (
+
     <div className="invite-friend-page">
       <h2 className="page-title">Invite a Friend and Get Discounts!</h2>
       <p className="page-description">
@@ -63,6 +87,10 @@ const InviteFriend = () => {
         </div>
       </section>
     </div>
+  ) : (
+    <div className="invite-friend-page">
+      <h2>Please log in to invite friends</h2>
+    </div>)
   );
 };
 

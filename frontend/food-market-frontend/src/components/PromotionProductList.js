@@ -27,6 +27,8 @@ const PromotionProductList = () => {
   useEffect(() => {
     if (user?.email) {
       checkAuthCustomer({ variables: { email: user.email } });
+    } else {
+      setUserRole(null);
     }
   }, [user?.email, checkAuthCustomer]);
 

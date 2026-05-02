@@ -16,7 +16,7 @@ public static class DbSeederAdmin
         using (var sha256 = SHA256.Create())
         {
             var hashedPassword = Convert.ToBase64String(sha256.ComputeHash(Encoding.UTF8.GetBytes("Admin@123")));
-            var adminCustomer = new Customers
+            var adminCustomer = new Customer
             {
                 Email="admin@example.com",
                 Password=hashedPassword,

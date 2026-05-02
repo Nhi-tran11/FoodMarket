@@ -4,7 +4,7 @@ namespace Backend.Model
     {
         public int Id { get; set; }
         public int UserId { get; set; }
-        public Customers?  User{ get; set; }
+        public Customer?  User{ get; set; }
         public decimal DiscountAmount { get; set; }
         public decimal DiscountPercentage { get; set; }
         public bool IsActive { get; set; }
