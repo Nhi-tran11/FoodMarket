@@ -1,6 +1,6 @@
 import React, { use, useState } from 'react';
 import ProductCard from './ProductCard';
-import { products, categories } from '../data/products';
+
 import './ProductList.css';
 import { gql,useLazyQuery } from '@apollo/client';
 import { useEffect } from 'react';
@@ -28,6 +28,8 @@ const ProductList = () => {
   useEffect(() => {
     if (user?.email) {
       checkAuthCustomer({ variables: { email: user.email } });
+    } else {
+      setUserRole(null);
     }
   }, [user?.email, checkAuthCustomer]);
 

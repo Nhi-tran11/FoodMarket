@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import './ProductCard.css';
 import { gql, useMutation } from '@apollo/client';
-import { LocalState } from '@apollo/client/core/LocalState';
 
 const ProductCard = ({ product, userRole }) => {
   const { addToCart } = useCart();
@@ -50,7 +49,7 @@ const ProductCard = ({ product, userRole }) => {
         onClick={handleDeleteProduct}
         className="admin-badge">Delete</button>
       )}
-      <Link to={`/product/${product.id}`} className="product-link">
+      <Link className="product-link">
         <div className="product-image-container">
           <img src={product.image} alt={product.name} className="product-image" />
           {!product.inStock && <div className="out-of-stock-badge">Out of Stock</div>}
@@ -78,12 +77,14 @@ const ProductCard = ({ product, userRole }) => {
               )}
               <span className="product-unit">{product.unit}</span>
             </div>
-            <button
-              onClick={() => { localStorage.setItem('selectedProduct', JSON.stringify(product)); window.location.href = '/add-promotion'; }}
-              className="add-promotion-btn"
-            >
-              🎁 Add Promotion
-            </button>
+            {userRole === 'Admin' && (
+              <button
+                onClick={() => { localStorage.setItem('selectedProduct', JSON.stringify(product)); window.location.href = '/add-promotion'; }}
+                className="add-promotion-btn"
+              >
+                🎁 Add Promotion
+              </button>
+            )}
           </div>
         </div>
       </Link>

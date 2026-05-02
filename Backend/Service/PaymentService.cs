@@ -7,7 +7,7 @@ namespace Backend.Service
     public interface IPaymentService
     {
         Task<PaymentIntent> CreatePaymentIntentAsync(decimal amount, string currency, int orderId);
-                Task<PaymentIntent> ConfirmPaymentAsync(string paymentIntentId);
+        Task<PaymentIntent> ConfirmPaymentAsync(string paymentIntentId);
         Task<Payment> RecordPaymentAsync(int orderId, decimal amount, string currency, string stripePaymentIntentId, string status);
         string GetStripePublishableKey();
     }

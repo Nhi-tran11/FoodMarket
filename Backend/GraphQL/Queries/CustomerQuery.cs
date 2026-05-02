@@ -8,18 +8,18 @@ namespace Backend.GraphQL.Queries
     [ExtendObjectType("Query")]
     public class CustomerQuery
     {
-        public async Task<Customers?>CheckAuthCustomerAsync(
+        public async Task<Customer?>CheckAuthCustomerAsync(
             string email, 
             string password, 
             [Service] IAuthService authService)
         {
             return await authService.AuthenticateAsync(email, password);
         }
-        public async Task<Customers?>CustomerByEmailAsync(
+        public async Task<Customer?>CustomerByEmailAsync(
             string email,
             [Service] IAuthService authService)
         {
-            return await authService.GetCustomersAsync(email);
+            return await authService.GetCustomerAsync(email);
         }
     }
 }

@@ -120,7 +120,9 @@ public class ReferralService: IReferralService
             };
         }
         //Get or create referral code for invitee
-        string referralCode = await GenerateReferralCodeAsync(inviterId, inviteeEmail);
+        var referralCode = await GenerateReferralCodeAsync(inviterId, inviteeEmail);
+        var referralCodeEntity =await _dbContext.ReferalCodes.FirstOrDefaultAsync(rc => rc.Code == referralCode && rc.RefererId == inviterId);
+        string expireDate = referralCodeEntity?.ExpiryDate?.ToString("yyyy-MM-dd") ?? "";
         //Prepare email content
         var sender = _configuration["Email:SenderAddress"];
         if (string.IsNullOrEmpty(sender))
@@ -173,6 +175,7 @@ public class ReferralService: IReferralService
     </div>
     <div style='text-align: center; padding: 20px; color: #999; font-size: 12px;'>
         <p>This invitation was sent by {inviterName}.</p>
+        <p>This referral code is valid for 10 days {expireDate} and can only be used by new customers.</p>
     </div>
 </body>
 </html>";
